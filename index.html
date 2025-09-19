@@ -17,13 +17,18 @@
       font-family: "Inter", system-ui, sans-serif;
       background: linear-gradient(135deg, var(--bg1), var(--bg2));
       color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
       overflow: hidden;
     }
+
+    /* center everything */
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
     h1, p, #rotateMessage, #buttons, #rudeMsg, #playAnyway {
       display: none;
       opacity: 0;
@@ -48,7 +53,7 @@
     #yesBtn { background: var(--accent); color: white; }
     #noBtn { background: #444; color: var(--soft); }
     #rudeMsg, #playAnyway {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       margin-top: 20px;
       color: var(--soft);
     }
@@ -77,12 +82,12 @@
       animation: fadeOut 1.2s forwards;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translate(-50%, -40%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
     }
     @keyframes fadeOut {
-      from { opacity: 1; transform: translateY(0); }
-      to { opacity: 0; transform: translateY(-15px); }
+      from { opacity: 1; transform: translate(-50%, -50%); }
+      to { opacity: 0; transform: translate(-50%, -60%); }
     }
 
     /* Video Player */
@@ -102,21 +107,23 @@
 </head>
 <body>
 
-  <h1 id="line1">I’m Sorry Sarah Supriya ❤️</h1>
-  <p id="line2">I love you 3000</p>
+  <div class="center">
+    <h1 id="line1">I’m Sorry Sarah Supriya ❤️</h1>
+    <p id="line2">I love you 3000</p>
 
-  <div id="rotateMessage">
-    Could you please turn auto rotation on and<br>
-    watch this video in full screen?? 🫠
+    <div id="rotateMessage">
+      Could you please turn auto rotation on and<br>
+      watch this video in full screen saramma?? 🫠
+    </div>
+
+    <div id="buttons">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+
+    <div id="rudeMsg">You are rude af 🫵</div>
+    <div id="playAnyway">I’m playing anyway 😏</div>
   </div>
-
-  <div id="buttons">
-    <button id="yesBtn">Yes</button>
-    <button id="noBtn">No</button>
-  </div>
-
-  <div id="rudeMsg">You are rude af 🫵</div>
-  <div id="playAnyway">I’m playing anyway 😏</div>
 
   <div class="player-wrap" id="videoPlayer">
     <iframe id="videoFrame"
@@ -209,4 +216,3 @@
 
 </body>
 </html>
-
