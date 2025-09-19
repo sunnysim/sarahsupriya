@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apology to Sarah ❤️</title>
+  <style>
+    :root {
+      --bg1: #0f1724;
+      --bg2: #1e293b;
+      --accent: #ff4d6d;
+      --soft: #ffd6e0;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: "Inter", system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1, p, #rotateMessage {
+      opacity: 0;
+      display: none;
+      animation: fadeIn 1.5s forwards;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    p {
+      margin-top: 12px;
+      font-size: 1.1rem;
+      color: var(--soft);
+    }
+
+    #rotateMessage {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: var(--soft);
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      color: var(--accent);
+      font-size: 20px;
+      opacity: 0.6;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 0.6; }
+      to { transform: translateY(-110vh); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Video Player */
+    .player-wrap {
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: black;
+      z-index: 999;
+      animation: fadeIn 2s forwards;
+    }
+
+    .player-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="line1"> I’m Sorry Sarah Supriya ❤️ </h1>
+  <p id="line2"> I love you 3000 </p>
+
+  <!-- Rotation message -->
+  <div id="rotateMessage">
+    Rotate your screen please saramma 🫠
+  </div>
+
+  <div class="player-wrap" id="videoPlayer">
+    <iframe id="videoFrame"
+      src="https://go.screenpal.com/player/cTQoeknomuf?title=0&ff=1&autoplay=1&controls=1"
+      allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <script>
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+      heart.style.animationDuration = (Math.random() * 4 + 4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 700);
+
+    const line1 = document.getElementById("line1");
+    const line2 = document.getElementById("line2");
+    const rotateMsg = document.getElementById("rotateMessage");
+    const player = document.getElementById("videoPlayer");
+
+    // Hide all at start
+    line1.style.display = "none";
+    line2.style.display = "none";
+    rotateMsg.style.display = "none";
+
+    // Timeline
+    setTimeout(() => {
+      line1.style.display = "block";
+      line1.style.opacity = "1";
+    }, 0);  // Show line1 immediately
+
+    setTimeout(() => {
+      line2.style.display = "block";
+      line2.style.opacity = "1";
+    }, 3000);  // Show line2 after 3s
+
+    setTimeout(() => {
+      line1.style.display = "none";
+      line2.style.display = "none";
+    }, 8000);  // Hide both at 8s
+
+    setTimeout(() => {
+      rotateMsg.style.display = "block";
+      rotateMsg.style.opacity = "1";
+    }, 8000);  // Show rotation msg at 8s
+
+    setTimeout(() => {
+      rotateMsg.style.display = "none";
+    }, 11000);  // Hide rotation msg at 11s
+
+    // Show video at 11s
+    setTimeout(() => {
+      player.style.display = "block";
+      const requestFullscreen = player.requestFullscreen 
+        || player.webkitRequestFullscreen 
+        || player.msRequestFullscreen;
+      if (requestFullscreen) {
+        requestFullscreen.call(player).then(() => {
+          if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock("landscape").catch(() => {
+              console.log("Orientation lock not supported");
+            });
+          }
+        }).catch(() => {
+          console.log("Fullscreen request blocked by browser");
+        });
+      }
+    }, 11000);
+  </script>
+
+</body>
+</html>
