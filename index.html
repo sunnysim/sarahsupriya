@@ -1,10 +1,9 @@
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Apology to Sarah ❤️</title>
+  <title>Apology to Sarah❤️</title>
   <style>
     :root {
       --bg1: #0f1724;
@@ -21,35 +20,31 @@
       overflow: hidden;
     }
 
-    /* flexbox centering for mobile */
-    .center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    .step {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       text-align: center;
-      height: 100vh;
-      width: 100%;
-      padding: 0 10px;
-      box-sizing: border-box;
-    }
-
-    h1, p, #rotateMessage, #buttons, #rudeMsg, #playAnyway {
       display: none;
       opacity: 0;
+      width: 90%;
     }
+
     h1 { font-size: 1.6rem; margin: 0; }
-    p { margin-top: 12px; font-size: 1rem; color: var(--soft); }
+    p { font-size: 1.1rem; margin-top: 12px; color: var(--soft); }
+
     #rotateMessage {
-      margin-top: 20px;
       font-size: 1rem;
       color: var(--soft);
       line-height: 1.4;
+      margin-bottom: 15px;
     }
-    #buttons { margin-top: 15px; }
+
+    #buttons { margin-top: 10px; }
     button {
       padding: 10px 20px;
-      margin: 0 8px;
+      margin: 0 6px;
       border: none;
       border-radius: 10px;
       cursor: pointer;
@@ -57,9 +52,9 @@
     }
     #yesBtn { background: var(--accent); color: white; }
     #noBtn { background: #444; color: var(--soft); }
+
     #rudeMsg, #playAnyway {
       font-size: 1.3rem;
-      margin-top: 20px;
       color: var(--soft);
     }
     #rudeMsg { color: #ffb3c1; }
@@ -87,15 +82,14 @@
       animation: fadeOut 1.2s forwards;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translate(-50%, -40%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
     }
     @keyframes fadeOut {
-      from { opacity: 1; transform: translateY(0); }
-      to { opacity: 0; transform: translateY(-20px); }
+      from { opacity: 1; transform: translate(-50%, -50%); }
+      to { opacity: 0; transform: translate(-50%, -60%); }
     }
 
-    /* Video Player */
     .player-wrap {
       display: none;
       width: 100%;
@@ -112,24 +106,39 @@
 </head>
 <body>
 
-  <div class="center">
-    <h1 id="line1">I’m Sorry Sarah Supriya ❤️</h1>
-    <p id="line2">I love you 3000</p>
+  <!-- Step 1 -->
+  <div class="step" id="step1">
+    <h1>I’m Sorry Sarah Supriya ❤️</h1>
+  </div>
 
+  <!-- Step 2 -->
+  <div class="step" id="step2">
+    <p>I love you 3000</p>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step" id="step3">
     <div id="rotateMessage">
       Could you please turn auto rotation on and<br>
       watch this video in full screen saramma?? 🫠
     </div>
-
     <div id="buttons">
       <button id="yesBtn">Yes</button>
       <button id="noBtn">No</button>
     </div>
+  </div>
 
+  <!-- Step 4 -->
+  <div class="step" id="step4">
     <div id="rudeMsg">You are rude af 🫵</div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="step" id="step5">
     <div id="playAnyway">I’m playing anyway 😏</div>
   </div>
 
+  <!-- Video -->
   <div class="player-wrap" id="videoPlayer">
     <iframe id="videoFrame"
       src="https://go.screenpal.com/player/cTQoeknomuf?title=0&ff=1&autoplay=1"
@@ -139,21 +148,21 @@
   </div>
 
   <script>
-    const line1 = document.getElementById('line1');
-    const line2 = document.getElementById('line2');
-    const rotateMsg = document.getElementById('rotateMessage');
-    const buttons = document.getElementById('buttons');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const step4 = document.getElementById('step4');
+    const step5 = document.getElementById('step5');
+
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
-    const rudeMsg = document.getElementById('rudeMsg');
-    const playAnyway = document.getElementById('playAnyway');
     const player = document.getElementById('videoPlayer');
 
     let videoStarted = false;
     let inactivityTimer;
     let cryInterval;
 
-    // floating hearts always
+    // Floating hearts always
     setInterval(() => {
       const el = document.createElement('div');
       el.className = 'heart';
@@ -169,24 +178,26 @@
       videoStarted = true;
       clearTimeout(inactivityTimer);
       clearInterval(cryInterval);
-      [rotateMsg, buttons, rudeMsg, playAnyway].forEach(el => el.style.display = 'none');
+      [step1, step2, step3, step4, step5].forEach(el => { 
+        el.style.display = 'none'; 
+        el.style.opacity = 0; 
+      });
       player.style.display = 'block';
       const req = player.requestFullscreen || player.webkitRequestFullscreen || player.msRequestFullscreen;
       if (req) req.call(player).catch(()=>{});
     }
 
-    // Sequence
-    setTimeout(() => { line1.classList.add('fade-in'); }, 0);
-    setTimeout(() => { line2.classList.add('fade-in'); }, 3000);
+    // Sequence of steps
+    step1.classList.add('fade-in');
+    setTimeout(() => step2.classList.add('fade-in'), 3000);
+
     setTimeout(() => {
-      line1.classList.add('fade-out');
-      line2.classList.add('fade-out');
+      step1.classList.add('fade-out');
+      step2.classList.add('fade-out');
       setTimeout(() => {
-        line1.style.display = 'none';
-        line2.style.display = 'none';
-        rotateMsg.classList.add('fade-in');
-        buttons.classList.add('fade-in');
-        // autoplay after 15s inactivity
+        step1.style.display = 'none';
+        step2.style.display = 'none';
+        step3.classList.add('fade-in');
         inactivityTimer = setTimeout(playVideo, 15000);
       }, 1200);
     }, 8000);
@@ -195,12 +206,10 @@
 
     noBtn.addEventListener('click', () => {
       clearTimeout(inactivityTimer);
-      buttons.classList.add('fade-out');
-      rotateMsg.classList.add('fade-out');
+      step3.classList.add('fade-out');
       setTimeout(() => {
-        buttons.style.display = 'none';
-        rotateMsg.style.display = 'none';
-        rudeMsg.classList.add('fade-in');
+        step3.style.display = 'none';
+        step4.classList.add('fade-in');
         cryInterval = setInterval(() => {
           const el = document.createElement('div');
           el.className = 'cry';
@@ -213,7 +222,7 @@
       }, 1200);
 
       setTimeout(() => {
-        playAnyway.classList.add('fade-in');
+        step5.classList.add('fade-in');
         setTimeout(playVideo, 2000);
       }, 5000);
     });
