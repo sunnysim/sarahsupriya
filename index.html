@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,21 +21,25 @@
       overflow: hidden;
     }
 
-    /* center everything */
+    /* flexbox centering for mobile */
     .center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      height: 100vh;
+      width: 100%;
+      padding: 0 10px;
+      box-sizing: border-box;
     }
 
     h1, p, #rotateMessage, #buttons, #rudeMsg, #playAnyway {
       display: none;
       opacity: 0;
     }
-    h1 { font-size: 1.8rem; margin: 0; }
-    p { margin-top: 12px; font-size: 1.1rem; color: var(--soft); }
+    h1 { font-size: 1.6rem; margin: 0; }
+    p { margin-top: 12px; font-size: 1rem; color: var(--soft); }
     #rotateMessage {
       margin-top: 20px;
       font-size: 1rem;
@@ -53,7 +58,7 @@
     #yesBtn { background: var(--accent); color: white; }
     #noBtn { background: #444; color: var(--soft); }
     #rudeMsg, #playAnyway {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       margin-top: 20px;
       color: var(--soft);
     }
@@ -82,12 +87,12 @@
       animation: fadeOut 1.2s forwards;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translate(-50%, -40%); }
-      to { opacity: 1; transform: translate(-50%, -50%); }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     @keyframes fadeOut {
-      from { opacity: 1; transform: translate(-50%, -50%); }
-      to { opacity: 0; transform: translate(-50%, -60%); }
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-20px); }
     }
 
     /* Video Player */
