@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Apology to Sarah❤️</title>
+  <title>Apology to Sarah ❤️</title>
   <style>
     :root {
       --bg1: #0f1724;
@@ -29,7 +29,7 @@
       width: 90%;
     }
 
-    h1, p, #rotateMessage, #rudeMsg, #playAnyway {
+    h1, p, #rotateMessage, #rudeMsg, #playAnyway, #buttons {
       opacity: 0;
       transition: opacity 1s;
     }
@@ -118,6 +118,8 @@
     const sorryLine = document.getElementById('sorryLine');
     const loveLine = document.getElementById('loveLine');
     const step2 = document.getElementById('step2');
+    const rotateMessage = document.getElementById('rotateMessage');
+    const buttons = document.getElementById('buttons');
     const step3 = document.getElementById('step3');
     const playAnyway = document.getElementById('playAnyway');
 
@@ -129,7 +131,7 @@
     let inactivityTimer;
     let cryInterval;
 
-    // Floating hearts (start after 2s so text is visible)
+    // Floating hearts (start after 2s)
     setTimeout(() => {
       setInterval(() => {
         const el = document.createElement('div');
@@ -159,7 +161,7 @@
     // Step 1 fade-in sequence
     step1.style.display = 'block';
     setTimeout(() => { sorryLine.style.opacity = 1; }, 500);
-    setTimeout(() => { loveLine.style.opacity = 1; }, 2000);
+    setTimeout(() => { loveLine.style.opacity = 1; }, 3500); // 3s after sorryLine
 
     setTimeout(() => { 
       step1.style.transition = 'opacity 1s';
@@ -167,10 +169,14 @@
       setTimeout(() => {
         step1.style.display = 'none';
         step2.style.display = 'block';
-        setTimeout(() => { step2.querySelector('#rotateMessage').style.opacity = 1; }, 100);
+        // Fade in both rotation message and buttons together
+        setTimeout(() => {
+          rotateMessage.style.opacity = 1;
+          buttons.style.opacity = 1;
+        }, 100);
         inactivityTimer = setTimeout(playVideo, 15000);
       }, 1000);
-    }, 7000);
+    }, 7500);
 
     yesBtn.addEventListener('click', playVideo);
 
@@ -203,4 +209,3 @@
 
 </body>
 </html>
-
