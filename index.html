@@ -198,6 +198,206 @@
           setTimeout(() => el.remove(), 6000);
         }, 400);
 
+        setTimeout(() => {<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apology to Sarah❤️</title>
+  <style>
+    :root {
+      --bg1: #0f1724;
+      --bg2: #1e293b;
+      --accent: #ff4d6d;
+      --soft: #ffd6e0;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: "Inter", system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: white;
+      overflow: hidden;
+    }
+
+    .step {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 90%;
+    }
+
+    h1, p, #rotateMessage, #rudeMsg, #playAnyway, #buttons {
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    h1 { font-size: 1.6rem; margin: 0; }
+    p { font-size: 1.1rem; margin-top: 12px; color: var(--soft); }
+
+    #buttons { margin-top: 10px; }
+    button {
+      padding: 10px 20px;
+      margin: 0 6px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    #yesBtn { background: var(--accent); color: white; }
+    #noBtn { background: #444; color: var(--soft); }
+
+    /* Floating emoji */
+    .heart, .cry {
+      position: absolute;
+      bottom: -30px;
+      opacity: 0.8;
+      animation: floatUp 6s linear forwards;
+      pointer-events: none;
+    }
+    .heart { color: var(--accent); font-size: 20px; }
+    .cry { color: #00bfff; font-size: 26px; }
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 0.9; }
+      to { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    .player-wrap {
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0; left: 0;
+      background: black;
+      z-index: 999;
+    }
+    .player-wrap iframe {
+      width: 100%; height: 100%; border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Step 1 -->
+  <div class="step" id="step1">
+    <h1 id="sorryLine">I’m Sorry Sarah Supriya ❤️</h1>
+    <p id="loveLine">I love you 3000</p>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step" id="step2" style="display:none;">
+    <div id="rotateMessage">
+      Could you please turn auto rotation on and<br>
+      watch this video in full screen?? 🫠
+    </div>
+    <div id="buttons">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step" id="step3" style="display:none;">
+    <div id="rudeMsg">You are rude af 🫵</div>
+    <div id="playAnyway" style="display:none;">I’m playing anyway 😏</div>
+  </div>
+
+  <!-- Video -->
+  <div class="player-wrap" id="videoPlayer">
+    <iframe id="videoFrame"
+      src="https://go.screenpal.com/player/cTQoeknomuf?title=0&ff=1&autoplay=1"
+      allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <script>
+    const step1 = document.getElementById('step1');
+    const sorryLine = document.getElementById('sorryLine');
+    const loveLine = document.getElementById('loveLine');
+    const step2 = document.getElementById('step2');
+    const rotateMessage = document.getElementById('rotateMessage');
+    const buttons = document.getElementById('buttons');
+    const step3 = document.getElementById('step3');
+    const playAnyway = document.getElementById('playAnyway');
+
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const player = document.getElementById('videoPlayer');
+
+    let videoStarted = false;
+    let inactivityTimer;
+    let cryInterval;
+
+    // Floating hearts (start after 2s)
+    setTimeout(() => {
+      setInterval(() => {
+        const el = document.createElement('div');
+        el.className = 'heart';
+        el.textContent = '❤';
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 6000);
+      }, 700);
+    }, 2000);
+
+    function playVideo() {
+      if (videoStarted) return;
+      videoStarted = true;
+      clearTimeout(inactivityTimer);
+      clearInterval(cryInterval);
+      [step1, step2, step3].forEach(el => { 
+        el.style.display = 'none'; 
+        el.style.opacity = 0; 
+      });
+      player.style.display = 'block';
+      const req = player.requestFullscreen || player.webkitRequestFullscreen || player.msRequestFullscreen;
+      if (req) req.call(player).catch(()=>{});
+    }
+
+    // Step 1 fade-in sequence
+    step1.style.display = 'block';
+    setTimeout(() => { sorryLine.style.opacity = 1; }, 500);
+    setTimeout(() => { loveLine.style.opacity = 1; }, 3500); // 3s after sorryLine
+
+    setTimeout(() => { 
+      step1.style.transition = 'opacity 1s';
+      step1.style.opacity = 0;
+      setTimeout(() => {
+        step1.style.display = 'none';
+        step2.style.display = 'block';
+        // Fade in both rotation message and buttons together
+        setTimeout(() => {
+          rotateMessage.style.opacity = 1;
+          buttons.style.opacity = 1;
+        }, 100);
+        inactivityTimer = setTimeout(playVideo, 15000);
+      }, 1000);
+    }, 7500);
+
+    yesBtn.addEventListener('click', playVideo);
+
+    noBtn.addEventListener('click', () => {
+      clearTimeout(inactivityTimer);
+      step2.style.opacity = 0;
+      setTimeout(() => {
+        step2.style.display = 'none';
+        step3.style.display = 'block';
+        setTimeout(() => { step3.querySelector('#rudeMsg').style.opacity = 1; }, 100);
+
+        cryInterval = setInterval(() => {
+          const el = document.createElement('div');
+          el.className = 'cry';
+          el.textContent = '😭';
+          el.style.left = Math.random() * 100 + 'vw';
+          el.style.fontSize = (Math.random() * 30 + 16) + 'px';
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 6000);
+        }, 400);
+
         setTimeout(() => {
           playAnyway.style.display = 'block';
           setTimeout(() => { playAnyway.style.opacity = 1; }, 50);
@@ -209,3 +409,15 @@
 
 </body>
 </html>
+
+          playAnyway.style.display = 'block';
+          setTimeout(() => { playAnyway.style.opacity = 1; }, 50);
+          setTimeout(playVideo, 2000);
+        }, 3000);
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>
+
