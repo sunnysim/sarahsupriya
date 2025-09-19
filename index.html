@@ -1,0 +1,66 @@
+<body>
+
+  <h1 id="line1" style="display:none;"> I’m Sorry Sarah Supriya ❤️ </h1>
+  <p id="line2" style="display:none;"> I love you 3000 </p>
+
+  <!-- Rotation message -->
+  <div id="rotateMessage" style="display:none;">
+    Rotate your screen please saramma 🫠
+  </div>
+
+  <div class="player-wrap" id="videoPlayer">
+    <iframe id="videoFrame"
+      src="https://go.screenpal.com/player/cTQoeknomuf?title=0&ff=1&autoplay=1&controls=1"
+      allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <script>
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+      heart.style.animationDuration = (Math.random() * 4 + 4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 700);
+
+    const line1 = document.getElementById("line1");
+    const line2 = document.getElementById("line2");
+    const rotateMsg = document.getElementById("rotateMessage");
+    const player = document.getElementById("videoPlayer");
+
+    // Timeline
+    setTimeout(() => { line1.style.display = "block"; }, 0);          // show line1
+    setTimeout(() => { line2.style.display = "block"; }, 3000);      // show line2 after 3s
+    setTimeout(() => { line1.style.display = "none"; 
+                       line2.style.display = "none"; }, 8000);       // hide both after 8s
+    setTimeout(() => { rotateMsg.style.display = "block"; }, 8000);  // show rotate message
+    setTimeout(() => { rotateMsg.style.display = "none"; }, 11000);  // hide after 3s
+
+    // Show video at 11s
+    setTimeout(() => {
+      player.style.display = "block";
+      const requestFullscreen = player.requestFullscreen 
+        || player.webkitRequestFullscreen 
+        || player.msRequestFullscreen;
+      if (requestFullscreen) {
+        requestFullscreen.call(player).then(() => {
+          if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock("landscape").catch(() => {
+              console.log("Orientation lock not supported");
+            });
+          }
+        }).catch(() => {
+          console.log("Fullscreen request blocked by browser");
+        });
+      }
+    }, 11000);
+  </script>
+
+</body>
