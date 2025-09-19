@@ -26,20 +26,16 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      display: none;
-      opacity: 0;
       width: 90%;
+    }
+
+    h1, p, #rotateMessage, #rudeMsg, #playAnyway {
+      opacity: 0;
+      transition: opacity 1s;
     }
 
     h1 { font-size: 1.6rem; margin: 0; }
     p { font-size: 1.1rem; margin-top: 12px; color: var(--soft); }
-
-    #rotateMessage {
-      font-size: 1rem;
-      color: var(--soft);
-      line-height: 1.4;
-      margin-bottom: 15px;
-    }
 
     #buttons { margin-top: 10px; }
     button {
@@ -53,41 +49,19 @@
     #yesBtn { background: var(--accent); color: white; }
     #noBtn { background: #444; color: var(--soft); }
 
-    #rudeMsg, #playAnyway {
-      font-size: 1.3rem;
-      color: var(--soft);
-    }
-    #rudeMsg { color: #ffb3c1; }
-
     /* Floating emoji */
     .heart, .cry {
       position: absolute;
       bottom: -30px;
       opacity: 0.8;
       animation: floatUp 6s linear forwards;
+      pointer-events: none;
     }
     .heart { color: var(--accent); font-size: 20px; }
     .cry { color: #00bfff; font-size: 26px; }
     @keyframes floatUp {
       from { transform: translateY(0); opacity: 0.9; }
       to { transform: translateY(-120vh); opacity: 0; }
-    }
-
-    /* Fade animations */
-    .fade-in {
-      display: block !important;
-      animation: fadeIn 1.2s forwards;
-    }
-    .fade-out {
-      animation: fadeOut 1.2s forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translate(-50%, -40%); }
-      to { opacity: 1; transform: translate(-50%, -50%); }
-    }
-    @keyframes fadeOut {
-      from { opacity: 1; transform: translate(-50%, -50%); }
-      to { opacity: 0; transform: translate(-50%, -60%); }
     }
 
     .player-wrap {
@@ -108,16 +82,12 @@
 
   <!-- Step 1 -->
   <div class="step" id="step1">
-    <h1>I’m Sorry Sarah Supriya ❤️</h1>
+    <h1 id="sorryLine">I’m Sorry Sarah Supriya ❤️</h1>
+    <p id="loveLine">I love you 3000</p>
   </div>
 
   <!-- Step 2 -->
-  <div class="step" id="step2">
-    <p>I love you 3000</p>
-  </div>
-
-  <!-- Step 3 -->
-  <div class="step" id="step3">
+  <div class="step" id="step2" style="display:none;">
     <div id="rotateMessage">
       Could you please turn auto rotation on and<br>
       watch this video in full screen saramma?? 🫠
@@ -128,14 +98,10 @@
     </div>
   </div>
 
-  <!-- Step 4 -->
-  <div class="step" id="step4">
+  <!-- Step 3 -->
+  <div class="step" id="step3" style="display:none;">
     <div id="rudeMsg">You are rude af 🫵</div>
-  </div>
-
-  <!-- Step 5 -->
-  <div class="step" id="step5">
-    <div id="playAnyway">I’m playing anyway 😏</div>
+    <div id="playAnyway" style="display:none;">I’m playing anyway 😏</div>
   </div>
 
   <!-- Video -->
@@ -149,10 +115,11 @@
 
   <script>
     const step1 = document.getElementById('step1');
+    const sorryLine = document.getElementById('sorryLine');
+    const loveLine = document.getElementById('loveLine');
     const step2 = document.getElementById('step2');
     const step3 = document.getElementById('step3');
-    const step4 = document.getElementById('step4');
-    const step5 = document.getElementById('step5');
+    const playAnyway = document.getElementById('playAnyway');
 
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
@@ -162,23 +129,25 @@
     let inactivityTimer;
     let cryInterval;
 
-    // Floating hearts always
-    setInterval(() => {
-      const el = document.createElement('div');
-      el.className = 'heart';
-      el.textContent = '❤';
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.fontSize = (Math.random() * 20 + 10) + 'px';
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 6000);
-    }, 700);
+    // Floating hearts (start after 2s so text is visible)
+    setTimeout(() => {
+      setInterval(() => {
+        const el = document.createElement('div');
+        el.className = 'heart';
+        el.textContent = '❤';
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 6000);
+      }, 700);
+    }, 2000);
 
     function playVideo() {
       if (videoStarted) return;
       videoStarted = true;
       clearTimeout(inactivityTimer);
       clearInterval(cryInterval);
-      [step1, step2, step3, step4, step5].forEach(el => { 
+      [step1, step2, step3].forEach(el => { 
         el.style.display = 'none'; 
         el.style.opacity = 0; 
       });
@@ -187,29 +156,32 @@
       if (req) req.call(player).catch(()=>{});
     }
 
-    // Sequence of steps
-    step1.classList.add('fade-in');
-    setTimeout(() => step2.classList.add('fade-in'), 3000);
+    // Step 1 fade-in sequence
+    step1.style.display = 'block';
+    setTimeout(() => { sorryLine.style.opacity = 1; }, 500);
+    setTimeout(() => { loveLine.style.opacity = 1; }, 2000);
 
-    setTimeout(() => {
-      step1.classList.add('fade-out');
-      step2.classList.add('fade-out');
+    setTimeout(() => { 
+      step1.style.transition = 'opacity 1s';
+      step1.style.opacity = 0;
       setTimeout(() => {
         step1.style.display = 'none';
-        step2.style.display = 'none';
-        step3.classList.add('fade-in');
+        step2.style.display = 'block';
+        setTimeout(() => { step2.querySelector('#rotateMessage').style.opacity = 1; }, 100);
         inactivityTimer = setTimeout(playVideo, 15000);
-      }, 1200);
-    }, 8000);
+      }, 1000);
+    }, 7000);
 
     yesBtn.addEventListener('click', playVideo);
 
     noBtn.addEventListener('click', () => {
       clearTimeout(inactivityTimer);
-      step3.classList.add('fade-out');
+      step2.style.opacity = 0;
       setTimeout(() => {
-        step3.style.display = 'none';
-        step4.classList.add('fade-in');
+        step2.style.display = 'none';
+        step3.style.display = 'block';
+        setTimeout(() => { step3.querySelector('#rudeMsg').style.opacity = 1; }, 100);
+
         cryInterval = setInterval(() => {
           const el = document.createElement('div');
           el.className = 'cry';
@@ -219,14 +191,16 @@
           document.body.appendChild(el);
           setTimeout(() => el.remove(), 6000);
         }, 400);
-      }, 1200);
 
-      setTimeout(() => {
-        step5.classList.add('fade-in');
-        setTimeout(playVideo, 2000);
-      }, 5000);
+        setTimeout(() => {
+          playAnyway.style.display = 'block';
+          setTimeout(() => { playAnyway.style.opacity = 1; }, 50);
+          setTimeout(playVideo, 2000);
+        }, 3000);
+      }, 1000);
     });
   </script>
 
 </body>
 </html>
+
